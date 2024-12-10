@@ -6,7 +6,11 @@
         {
             Plateau plateau = new Plateau(4);
             plateau.toString();
-            plateau.Test_Plateau("chat");
+            string mot = Console.ReadLine();
+
+            bool estPresent = plateau.Test_Plateau(mot);
+            Console.WriteLine($"Le mot '{mot}' est {(estPresent ? "présent" : "absent")} sur le plateau.");
+            Console.WriteLine(plateau.Test_Plateau(mot));
 
         }
     }
