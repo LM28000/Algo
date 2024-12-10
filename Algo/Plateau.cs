@@ -20,7 +20,6 @@ namespace Algo
         private static readonly Random random = new Random();
         private List<Lettre> lettres;
         private int taille_grille;
-        private int taille_points;
         private List<string> dictionnaire;
 
         // Constructeur de la classe Plateau
