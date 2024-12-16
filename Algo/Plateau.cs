@@ -16,20 +16,22 @@ namespace Algo
     {
         private char[,] grille;
         private static readonly Random random = new Random();
-        private List<Lettre> lettres;
+        public List<Lettre> lettres;
         private int taille_grille;
-        private List<string> dictionnaire;
+        private Dictionnaire dictionnaire = new Dictionnaire();
         public Plateau(int taille)
         {
             grille = new char[taille, taille];
             taille_grille = taille;
             lettres = LireFichierLettres("Lettres.txt");
-            dictionnaire = LireDictionnaire("MotsPossiblesFR.txt");
+            dictionnaire.contenu = LireDictionnaire("MotsPossiblesFR.txt");
             InitialiserGrille();
         }
         private List<string> LireDictionnaire(string chemin)
         {
             var contenu = File.ReadAllText(chemin);
+            
+            dictionnaire.test();
             return contenu.Split(new[] { ' ', '\n', '\r' })
                           .ToList();
         }
@@ -87,8 +89,8 @@ namespace Algo
         }
         public bool estpresentdansdico(string mot)
         {
-            dictionnaire = TriDictionnairefusion(dictionnaire);
-            return RechercheDichotomique(dictionnaire, mot);
+            dictionnaire.contenu = TriDictionnairefusion(dictionnaire.contenu);
+            return RechercheDichotomique(dictionnaire.contenu, mot);
         }
 
         private bool RechercheDichotomique(List<string> liste, string mot)

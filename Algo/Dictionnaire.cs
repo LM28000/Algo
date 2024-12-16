@@ -7,7 +7,11 @@ namespace dico
 {
     class Dictionnaire
     {
-
+        public List<string> contenu;
+        public void test()
+        {
+            Console.WriteLine("test");
+        }
         
     }
 }
