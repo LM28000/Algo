@@ -7,6 +7,7 @@ namespace ClasseJoueur
         public string[] ListeDeMot = new string[365];
         public int[] OccurenceMot = new int[365];
         public int compteur = 0;
+        public bool ia=false;
         public Joueur(string name)
         {
             this.name = name;

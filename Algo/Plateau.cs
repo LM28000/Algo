@@ -19,12 +19,17 @@ namespace Algo
         public List<Lettre> lettres;
         private int taille_grille;
         private Dictionnaire dictionnaire = new Dictionnaire();
-        public Plateau(int taille)
+        private string langue;
+        public Plateau(int taille, string langue)
         {
+            this.langue = langue;
             grille = new char[taille, taille];
             taille_grille = taille;
             lettres = LireFichierLettres("Lettres.txt");
-            dictionnaire.contenu = dictionnaire.LireDictionnaire("MotsPossiblesFR.txt");
+            if (langue == "Francais")
+                dictionnaire.contenu = dictionnaire.LireDictionnaire("MotsPossiblesFR.txt");
+            else
+                dictionnaire.contenu = dictionnaire.LireDictionnaire("MotsPossiblesEN.txt");
             InitialiserGrille();
         }
         

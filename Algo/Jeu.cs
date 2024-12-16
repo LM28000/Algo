@@ -1,5 +1,6 @@
 using Algo;
 using ClasseJoueur;
+using System;
 
 namespace GameJeu
 {
@@ -43,18 +44,28 @@ namespace GameJeu
                     Console.WriteLine("Entrez une taille de grille correcte, minimum 4x4 (ex : 5) : ");
                     this.tailleGrid = Convert.ToInt32(Console.ReadLine());
                 }
-
                 Console.WriteLine("Combien de joueurs : ");
                 this.nbJoueurs = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("Entrez les pseudos des joueurs : ");
+                Console.WriteLine("IA (oui/non) ?");
                 Joueur[] joueurs = new Joueur[nbJoueurs];
-                string pseudoTempo;
-                for (int i = 0; i < nbJoueurs; i++)
-                {
-                    pseudoTempo = Console.ReadLine();
-                    joueurs[i] = new Joueur(pseudoTempo);
+                if (Console.ReadLine() == "oui") {
+                    string pseudoTempo;
+                    joueurs[0] = new Joueur("bot");
+                    joueurs[0].ia = true;
+                    Console.WriteLine("Pseudo");
+                    joueurs[1] = new Joueur(Console.ReadLine());
                 }
-
+                else {
+                    
+                    Console.WriteLine("Entrez les pseudos des joueurs : ");
+                    
+                    string pseudoTempo;
+                    for (int i = 0; i < nbJoueurs; i++)
+                    {
+                        pseudoTempo = Console.ReadLine();
+                        joueurs[i] = new Joueur(pseudoTempo);
+                    }
+                }
                 int timer = 6;
 
 
@@ -73,7 +84,7 @@ namespace GameJeu
 
                     for (int i = 0; i < nbJoueurs; i++)
                     {
-                        Plateau plateau = new Plateau(this.tailleGrid);
+                        Plateau plateau = new Plateau(this.tailleGrid, langue);
                         plateau.toString();
                         #region TimerDe1Minute
                         //Console.WriteLine("Timer started for 1 minute");
@@ -84,26 +95,31 @@ namespace GameJeu
                             Thread.Sleep(1000); // Pause de 1 seconde pour "compter" une seconde
                             //TimeSpan elapsed = DateTime.Now - startTime;
                             //Console.WriteLine($"Elapsed time: {elapsed.Seconds} seconds");
-
-                            Console.WriteLine("C'est au tour de " + joueurs[i].name + " de jouer. Vous avez 1 minute pour jouer.");
-                            Console.WriteLine("Entrez un mot : ");
-                            string? mot = Console.ReadLine();
-
-                            if (mot != null)
-                            {
-                                bool estPresent = plateau.Test_Plateau(mot);
-                                Console.WriteLine($"Le mot '{mot}' est {(estPresent ? "présent" : "absent")} sur le plateau.");
-                                if (estPresent == true)
-                                {
-                                    joueurs[i].Add_Mot(mot);
-                                    joueurs[i].score += Score_Add(mot, plateau);
-                                    Console.WriteLine("Le score de " + joueurs[i].name + " est de " + joueurs[i].score + " grâce aux mots cités suivants");
-                                    joueurs[i].AfficherMotsJoueurs();
-                                }
+                            if (joueurs[i].ia == true) { 
+                                
                             }
                             else
                             {
-                                Console.WriteLine("Aucun mot n'a été saisi.");
+                                Console.WriteLine("C'est au tour de " + joueurs[i].name + " de jouer. Vous avez 1 minute pour jouer.");
+                                Console.WriteLine("Entrez un mot : ");
+                                string? mot = Console.ReadLine();
+
+                                if (mot != null)
+                                {
+                                    bool estPresent = plateau.Test_Plateau(mot);
+                                    Console.WriteLine($"Le mot '{mot}' est {(estPresent ? "présent" : "absent")} sur le plateau.");
+                                    if (estPresent == true)
+                                    {
+                                        joueurs[i].Add_Mot(mot);
+                                        joueurs[i].score += Score_Add(mot, plateau);
+                                        Console.WriteLine("Le score de " + joueurs[i].name + " est de " + joueurs[i].score + " grâce aux mots cités suivants");
+                                        joueurs[i].AfficherMotsJoueurs();
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Aucun mot n'a été saisi.");
+                                }
                             }
                         }
                         Console.WriteLine("Fin du joueur");
@@ -176,7 +192,7 @@ namespace GameJeu
                             //Console.WriteLine($"Elapsed time: {elapsed.Seconds} seconds");
 
                             Console.WriteLine("It's " + joueurs[i].name + "'s turn to play. You have 1 minute : ");
-                            Plateau plateau = new Plateau(4);
+                            Plateau plateau = new Plateau(this.tailleGrid, langue);
                             plateau.toString();
 
                             Console.WriteLine("Enter a word : ");
