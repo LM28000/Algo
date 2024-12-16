@@ -224,8 +224,6 @@ namespace GameJeu
             int occurenceMax = mots.Values.Max();
             int occurenceMin = mots.Values.Min();
             if (occurenceMax < 2) occurenceMax = 2;
-            Console.WriteLine(occurenceMax);
-            Console.WriteLine(occurenceMin);
 
             // Mapper chaque mot à une taille de police
             var motsAvecTaille = mots.Select(mot => new
