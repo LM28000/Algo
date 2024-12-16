@@ -6,13 +6,30 @@ using dico;
 
 namespace Algo
 {
+    /// <summary>
+    /// Représente une lettre avec son caractère, sa fréquence et ses points.
+    /// </summary>
     internal class Lettre
     {
+        /// <summary>
+        /// Obtient ou définit le caractère de la lettre.
+        /// </summary>
         public char Caractere { get; set; }
+
+        /// <summary>
+        /// Obtient ou définit la fréquence de la lettre.
+        /// </summary>
         public int Frequence { get; set; }
+
+        /// <summary>
+        /// Obtient ou définit les points de la lettre.
+        /// </summary>
         public int Points { get; set; }
     }
 
+    /// <summary>
+    /// Représente le plateau de jeu.
+    /// </summary>
     internal class Plateau
     {
         private char[,] grille;
@@ -22,6 +39,11 @@ namespace Algo
         public Dictionnaire dictionnaire = new Dictionnaire();
         private string langue;
 
+        /// <summary>
+        /// Initialise une nouvelle instance de la classe <see cref="Plateau"/>.
+        /// </summary>
+        /// <param name="taille">La taille du plateau.</param>
+        /// <param name="langue">La langue utilisée pour le dictionnaire.</param>
         public Plateau(int taille, string langue)
         {
             this.langue = langue;
@@ -38,6 +60,11 @@ namespace Algo
             InitialiserGrille();
         }
 
+        /// <summary>
+        /// Lit le fichier des lettres et retourne une liste de <see cref="Lettre"/>.
+        /// </summary>
+        /// <param name="chemin">Le chemin du fichier des lettres.</param>
+        /// <returns>Une liste de <see cref="Lettre"/>.</returns>
         private List<Lettre> LireFichierLettres(string chemin)
         {
             var lettres = new List<Lettre>();
@@ -57,6 +84,9 @@ namespace Algo
             return lettres;
         }
 
+        /// <summary>
+        /// Initialise la grille avec des lettres aléatoires basées sur leur fréquence.
+        /// </summary>
         private void InitialiserGrille()
         {
             var poolLettres = new List<char>();
@@ -80,6 +110,9 @@ namespace Algo
             }
         }
 
+        /// <summary>
+        /// Affiche la grille sur la console.
+        /// </summary>
         public void toString()
         {
             for (int i = 0; i < grille.GetLength(0); i++)
@@ -92,6 +125,11 @@ namespace Algo
             }
         }
 
+        /// <summary>
+        /// Teste si un mot peut être formé sur le plateau.
+        /// </summary>
+        /// <param name="mot">Le mot à tester.</param>
+        /// <returns><c>true</c> si le mot peut être formé; sinon, <c>false</c>.</returns>
         public bool Test_Plateau(string mot)
         {
             Console.WriteLine($"Test du mot: {mot}");
@@ -125,6 +163,15 @@ namespace Algo
             return false;
         }
 
+        /// <summary>
+        /// Méthode récursive pour tester si un mot peut être formé sur le plateau.
+        /// </summary>
+        /// <param name="mot">Le mot à tester.</param>
+        /// <param name="index">L'index actuel dans le mot.</param>
+        /// <param name="x">La position x actuelle sur la grille.</param>
+        /// <param name="y">La position y actuelle sur la grille.</param>
+        /// <param name="visite">Tableau des positions déjà visitées.</param>
+        /// <returns><c>true</c> si le mot peut être formé; sinon, <c>false</c>.</returns>
         private bool Test_PlateauRec(string mot, int index, int x, int y, bool[,] visite)
         {
             if (index == mot.Length)

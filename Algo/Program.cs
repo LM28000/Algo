@@ -7,6 +7,10 @@ namespace Test
 {
     class Program
     {
+        /// <summary>
+        /// Point d'entrée principal de l'application.
+        /// </summary>
+        /// <param name="args">Arguments de ligne de commande.</param>
         static void Main(string[] args)
         {
             string langue;

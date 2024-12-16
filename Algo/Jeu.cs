@@ -10,11 +10,21 @@ namespace GameJeu
         public int nbJoueurs;
         public int tailleGrid;
 
+        /// <summary>
+        /// Constructeur de la classe Jeu.
+        /// </summary>
+        /// <param name="langue">Langue du jeu.</param>
         public Jeu(string langue)
         {
             this.langue = langue;
         }
 
+        /// <summary>
+        /// Méthode pour ajouter le score d'un mot.
+        /// </summary>
+        /// <param name="mot">Le mot à évaluer.</param>
+        /// <param name="plateau1">Le plateau de jeu.</param>
+        /// <returns>Le score du mot.</returns>
         public int Score_Add(string mot, Plateau plateau1)
         {
             char[] tabChar = new char[mot.Length];
@@ -32,6 +42,10 @@ namespace GameJeu
             return scoreTp;
         }
 
+        /// <summary>
+        /// Méthode pour lancer le jeu.
+        /// </summary>
+        /// <param name="langue">Langue du jeu.</param>
         public void LancerJeu(string langue)
         {
             Console.WriteLine("Choix de la taille de la grille, minimum 4 par 4 : ");
@@ -155,3 +169,4 @@ namespace GameJeu
         }
     }
 }
+
