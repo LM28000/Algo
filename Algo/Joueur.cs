@@ -2,12 +2,13 @@ namespace ClasseJoueur
 {
     internal class Joueur
     {
-        public string name;
+        public string name="ia";
         public int score;
         public string[] ListeDeMot = new string[365];
         public int[] OccurenceMot = new int[365];
         public int compteur = 0;
         public bool ia=false;
+        public int indice;
         public Joueur(string name)
         {
             this.name = name;

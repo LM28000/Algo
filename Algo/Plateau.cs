@@ -18,7 +18,7 @@ namespace Algo
         private static readonly Random random = new Random();
         public List<Lettre> lettres;
         private int taille_grille;
-        private Dictionnaire dictionnaire = new Dictionnaire();
+        public Dictionnaire dictionnaire = new Dictionnaire();
         private string langue;
         public Plateau(int taille, string langue)
         {
@@ -103,6 +103,7 @@ namespace Algo
             {
                 for (int j = 0; j < grille.GetLength(1); j++)
                 {
+
                     if (grille[i, j] == mot[0])
                     {
                         Console.WriteLine($"Départ possible trouvé pour {mot[0]} à ({i}, {j})");
