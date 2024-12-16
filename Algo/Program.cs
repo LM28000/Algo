@@ -1,5 +1,5 @@
 using Algo;
-using TestPourProjetAlgo;
+using ClasseJoueur;
 
 namespace Test
 {
