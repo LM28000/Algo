@@ -5,31 +5,6 @@ namespace Test
 {
     class Program
     {
-        #region IO
-        static void Open()
-        {
-            string data;
-            StreamReader sr = null;
-            try
-            {
-                sr = new StreamReader("C:/Users/comew/OneDrive/Desktop/Jjeje.txt");
-                data = sr.ReadLine();
-                while (data != null)
-                {
-                    Console.WriteLine(data);
-                    data = sr.ReadLine();
-                }
-            }
-            catch (IOException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            finally
-            {
-                sr.Close();
-            }
-        }
-        #endregion
         static void Main(string[] args)
         {
             //Open();
