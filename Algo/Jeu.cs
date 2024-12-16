@@ -23,10 +23,10 @@ namespace GameJeu
             int scoreTp = 0;
             foreach (char c in tabChar)
             {
-                for (int i = 0; i <= plateau1.lettres.Count; i++)
+                for (int i = 0; i < plateau1.lettres.Count; i++)
                 {
                     if (plateau1.lettres[i].Caractere == c)
-                        scoreTp+= plateau1.lettres[c].Points;
+                        scoreTp+= plateau1.lettres[i].Points;
                 }
             }
             return scoreTp;
