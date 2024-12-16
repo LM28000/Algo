@@ -22,7 +22,6 @@ namespace Algo
         public Dictionnaire dictionnaire = new Dictionnaire();
         private string langue;
 
-        // Constructeur de la classe Plateau
         public Plateau(int taille, string langue)
         {
             this.langue = langue;
@@ -30,7 +29,6 @@ namespace Algo
             taille_grille = taille;
             lettres = LireFichierLettres("Lettres.txt");
 
-            // Charger le dictionnaire en fonction de la langue
             if (langue == "Francais")
                 dictionnaire.contenu = dictionnaire.LireDictionnaire("MotsPossiblesFR.txt");
             else
@@ -40,7 +38,6 @@ namespace Algo
             InitialiserGrille();
         }
 
-        // Lire le fichier des lettres et les stocker dans une liste
         private List<Lettre> LireFichierLettres(string chemin)
         {
             var lettres = new List<Lettre>();
@@ -60,12 +57,10 @@ namespace Algo
             return lettres;
         }
 
-        // Initialiser la grille avec des lettres aléatoires en fonction de leur fréquence
         private void InitialiserGrille()
         {
             var poolLettres = new List<char>();
 
-            // Ajouter les lettres au pool en fonction de leur fréquence
             foreach (var lettre in lettres)
             {
                 for (int i = 0; i < lettre.Frequence; i++)
@@ -74,7 +69,6 @@ namespace Algo
                 }
             }
 
-            // Remplir la grille avec des lettres aléatoires du pool
             for (int i = 0; i < grille.GetLength(0); i++)
             {
                 for (int j = 0; j < grille.GetLength(1); j++)
@@ -86,7 +80,6 @@ namespace Algo
             }
         }
 
-        // Afficher la grille
         public void toString()
         {
             for (int i = 0; i < grille.GetLength(0); i++)
@@ -99,12 +92,10 @@ namespace Algo
             }
         }
 
-        // Tester si un mot est présent sur le plateau
         public bool Test_Plateau(string mot)
         {
             Console.WriteLine($"Test du mot: {mot}");
 
-            // Vérifier si le mot est dans le dictionnaire
             if (dictionnaire.estpresentdansdico(mot))
             {
                 Console.WriteLine($"Le mot {mot} est dans le dictionnaire.");
@@ -115,7 +106,6 @@ namespace Algo
                 return false;
             }
 
-            // Chercher le mot sur le plateau
             for (int i = 0; i < grille.GetLength(0); i++)
             {
                 for (int j = 0; j < grille.GetLength(1); j++)
@@ -135,7 +125,6 @@ namespace Algo
             return false;
         }
 
-        // Fonction récursive pour tester la présence du mot sur le plateau
         private bool Test_PlateauRec(string mot, int index, int x, int y, bool[,] visite)
         {
             if (index == mot.Length)
@@ -148,7 +137,6 @@ namespace Algo
             int[] dx = { -1, -1, -1, 0, 0, 1, 1, 1 };
             int[] dy = { -1, 0, 1, -1, 1, -1, 0, 1 };
 
-            // Vérifier les 8 directions autour de la lettre actuelle
             for (int dir = 0; dir < 8; dir++)
             {
                 int nx = x + dx[dir];

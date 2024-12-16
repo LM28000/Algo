@@ -6,27 +6,21 @@ namespace GameJeu
 {
     internal class Jeu
     {
-        public string langue; // Langue du jeu
-        public int nbJoueurs; // Nombre de joueurs
-        public int tailleGrid; // Taille de la grille
+        public string langue;
+        public int nbJoueurs;
+        public int tailleGrid;
 
-        // Constructeur de la classe Jeu
         public Jeu(string langue)
         {
             this.langue = langue;
-            //this.nbJoueur = 0;
-            //this.tailleDeGrid = tailleGrid;
         }
 
-        // Méthode pour ajouter le score d'un mot
         public int Score_Add(string mot, Plateau plateau1)
         {
-            // Convertir le mot en tableau de caractères
             char[] tabChar = new char[mot.Length];
             tabChar = mot.ToCharArray();
             int scoreTp = 0;
 
-            // Calculer le score du mot en fonction des lettres présentes sur le plateau
             foreach (char c in tabChar)
             {
                 for (int i = 0; i < plateau1.lettres.Count; i++)
@@ -38,10 +32,8 @@ namespace GameJeu
             return scoreTp;
         }
 
-        // Méthode pour lancer le jeu
         public void LancerJeu(string langue)
         {
-            // Demander la taille de la grille
             Console.WriteLine("Choix de la taille de la grille, minimum 4 par 4 : ");
             this.tailleGrid = Convert.ToInt32(Console.ReadLine());
             while (tailleGrid < 4)
@@ -50,11 +42,9 @@ namespace GameJeu
                 this.tailleGrid = Convert.ToInt32(Console.ReadLine());
             }
 
-            // Demander le nombre de joueurs
             Console.WriteLine("Combien de joueurs : ");
             this.nbJoueurs = Convert.ToInt32(Console.ReadLine());
 
-            // Demander si une IA est présente
             Console.WriteLine("IA (oui/non) ?");
             Joueur[] joueurs = new Joueur[nbJoueurs];
             if (Console.ReadLine() == "oui")
@@ -68,7 +58,6 @@ namespace GameJeu
             }
             else
             {
-                // Demander les pseudos des joueurs
                 Console.WriteLine("Entrez les pseudos des joueurs : ");
                 string pseudoTempo;
                 for (int i = 0; i < nbJoueurs; i++)
@@ -79,13 +68,10 @@ namespace GameJeu
             }
             int timer = 1;
 
-            #region TotalGameTimer
-            // Définir le temps total de jeu
             Console.WriteLine("La temps de jeu pour la partie est de 6 minutes");
             DateTime startTime2 = DateTime.Now;
-            TimeSpan duration2 = new TimeSpan(0, timer, 0); // 6 minutes
+            TimeSpan duration2 = new TimeSpan(0, timer, 0);
 
-            // Boucle principale du jeu
             while (DateTime.Now - startTime2 < duration2)
             {
                 for (int i = 0; i < nbJoueurs; i++)
@@ -93,16 +79,13 @@ namespace GameJeu
                     Plateau plateau = new Plateau(this.tailleGrid, langue);
                     plateau.toString();
 
-                    #region TimerDe1Minute
-                    // Définir le temps de jeu pour chaque joueur
                     DateTime startTime = DateTime.Now;
                     TimeSpan duration = new TimeSpan(0, 0, 15);
 
                     if (joueurs[i].ia == true)
                     {
                         joueurs[i].indice = 0;
-                        // Boucle pour le tour de l'IA
-                        while ((DateTime.Now - startTime < duration) && joueurs[i].indice < plateau.dictionnaire.contenu.Count()) //boucle 1 minute pour chaque tour de joueur
+                        while ((DateTime.Now - startTime < duration) && joueurs[i].indice < plateau.dictionnaire.contenu.Count())
                         {
                             if (plateau.dictionnaire.contenu[joueurs[i].indice] == null || plateau.dictionnaire.contenu[joueurs[i].indice] == "")
                             {
@@ -123,8 +106,7 @@ namespace GameJeu
                     }
                     else
                     {
-                        // Boucle pour le tour d'un joueur humain
-                        while (DateTime.Now - startTime < duration) //boucle 1 minute pour chaque tour de joueur
+                        while (DateTime.Now - startTime < duration)
                         {
                             Console.WriteLine("C'est au tour de " + joueurs[i].name + " de jouer. Vous avez 1 minute pour jouer.");
                             Console.WriteLine("Entrez un mot : ");
@@ -151,17 +133,14 @@ namespace GameJeu
 
                     Console.WriteLine("Fin du joueur");
                 }
-                #endregion
             }
             Console.WriteLine("Fin de la Partie");
 
-            // Afficher les scores de chaque joueur
             for (int i = 0; i < nbJoueurs; i++)
             {
                 Console.WriteLine("Le score de " + joueurs[i].name + " est de " + joueurs[i].score + ".");
             }
 
-            // Déterminer le vainqueur
             int[] scores = new int[nbJoueurs];
             for (int i = 0; i < nbJoueurs; i++)
             {
@@ -173,7 +152,6 @@ namespace GameJeu
                 if (maxScore == joueurs[i].score)
                     Console.WriteLine(joueurs[i].name + " est le vainqueur avec un score de " + joueurs[i].score);
             }
-            #endregion
         }
     }
 }
