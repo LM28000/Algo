@@ -96,6 +96,23 @@ namespace GameJeu
                     #endregion
                 }
                 Console.WriteLine("Fin de la Partie");
+                //Compter le score for each player
+                
+                for (int i = 0; i < nbJoueurs; i++)
+                {
+                    Console.WriteLine("Le score de " +joueurs[i].name + " est de " + joueurs[i].score + ".");
+                }
+                int[] scores = new int[nbJoueurs];
+                for (int i = 0; i < nbJoueurs; i++)
+                {
+                    scores[i] = joueurs[i].score;
+                }
+                int maxScore = scores.Max();
+                for (int i = 0; i < nbJoueurs; i++)
+                { 
+                    if(maxScore == joueurs[i].score)
+                        Console.WriteLine(joueurs[i].name + " est le vainqueur avec un score de "+ joueurs[i].score);
+                }
                 #endregion
             }
             else //English
@@ -172,18 +189,23 @@ namespace GameJeu
 
                 }
                 Console.WriteLine("Game Over");
+                
                 //for each player
                 for (int i = 0; i < nbJoueurs; i++)
                 {
                     Console.WriteLine(joueurs[i].name + "'s score is " + joueurs[i].score + ".");
                 }
-
-                //if (J1.score > J2.score /*&& J1.score>J3.score*/)
-                //{
-                //    Console.WriteLine(J1.name + " wins!!!");
-                //}//else if (J3.score>J2.score) Console.WriteLine(J3.name + " wins!!!");
-                //else Console.WriteLine(J2.name + " wins!!!");
-
+                int[] scores = new int[nbJoueurs];
+                for (int i = 0; i < nbJoueurs; i++)
+                {
+                    scores[i] = joueurs[i].score;
+                }
+                int maxScore = scores.Max();
+                for (int i = 0; i < nbJoueurs; i++)
+                { 
+                    if(maxScore == joueurs[i].score)
+                        Console.WriteLine(joueurs[i].name + " is the winner with a score of "+ joueurs[i].score);
+                }
                 #endregion
                 #endregion
             }
