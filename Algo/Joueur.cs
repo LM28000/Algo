@@ -1,4 +1,4 @@
-namespace TestPourProjetAlgo
+namespace ClasseJoueur
 {
     internal class Joueur
     {
