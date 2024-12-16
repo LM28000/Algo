@@ -18,7 +18,7 @@ namespace Test
             Console.WriteLine("- Francais");
             Console.WriteLine("- English");
             langue = Convert.ToString(Console.ReadLine());
-            while (langue != "Francais" && langue != "English") //Pour éviter toutes autres langues
+            while (langue != "Francais" && langue != "English")
             {
                 Console.WriteLine("Please enter a correct language / Veuillez entrer une langue correct");
                 langue = Convert.ToString(Console.ReadLine());
