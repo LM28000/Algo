@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using dico;
 
 namespace Algo
 {
@@ -84,6 +85,39 @@ namespace Algo
             }
             return resultat;
         }
+        public bool estpresentdansdico(string mot)
+        {
+            dictionnaire = TriDictionnairefusion(dictionnaire);
+            return RechercheDichotomique(dictionnaire, mot);
+        }
+
+        private bool RechercheDichotomique(List<string> liste, string mot)
+        {
+            int gauche = 0;
+            int droite = liste.Count - 1;
+
+            while (gauche <= droite)
+            {
+                int milieu = (gauche + droite) / 2;
+                int comparaison = string.Compare(liste[milieu], mot, StringComparison.OrdinalIgnoreCase);
+
+                if (comparaison == 0)
+                {
+                    return true;
+                }
+                else if (comparaison < 0)
+                {
+                    gauche = milieu + 1;
+                }
+                else
+                {
+                    droite = milieu - 1;
+                }
+            }
+
+            return false;
+        }
+
         private List<Lettre> LireFichierLettres(string chemin)
         {
             var lettres = new List<Lettre>();
@@ -148,7 +182,8 @@ namespace Algo
             {
                 Console.WriteLine($"Le mot {mot} est dans le dictionnaire.");
             }
-
+            bool test = estpresentdansdico("TOUS");
+            Console.WriteLine(test);
             for (int i = 0; i < grille.GetLength(0); i++)
             {
                 for (int j = 0; j < grille.GetLength(1); j++)

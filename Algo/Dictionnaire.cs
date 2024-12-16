@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Algo
+namespace dico
 {
     class Dictionnaire
     {
@@ -65,6 +65,29 @@ namespace Algo
                 }
             }
             return resultat;
+        }
+
+        public bool recherchedichotomiquedictionnaire(List<string> dictionnaire, string mot)
+        {
+            int debut = 0;
+            int fin = dictionnaire.Count - 1;
+            while (debut <= fin)
+            {
+                int milieu = (debut + fin) / 2;
+                if (dictionnaire[milieu] == mot)
+                {
+                    return true;
+                }
+                else if (dictionnaire[milieu].CompareTo(mot) < 0)
+                {
+                    debut = milieu + 1;
+                }
+                else
+                {
+                    fin = milieu - 1;
+                }
+            }
+            return false;
         }
     }
 }
