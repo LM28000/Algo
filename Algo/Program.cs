@@ -1,6 +1,5 @@
 using Algo;
 using ClasseJoueur;
-using Dictionnaire;
 
 namespace Test
 {
