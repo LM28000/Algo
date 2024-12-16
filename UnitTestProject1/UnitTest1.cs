@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using ClasseJoueur;
+using GameJeu;
 
 
 namespace GameJeu
