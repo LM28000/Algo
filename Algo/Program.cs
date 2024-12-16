@@ -2,6 +2,7 @@ using Algo;
 using ClasseJoueur;
 using System;
 using GameJeu;
+using ClasseJoueur;
 
 namespace Test
 {
@@ -30,6 +31,14 @@ namespace Test
 
             Jeu Game1 = new Jeu(langue);
             Game1.LancerJeu(langue);
+            // Dimensions de l'image
+            int largeur = 800;
+            int hauteur = 600;
+
+            // Générer et sauvegarder le nuage de mots
+            string cheminFichier = "nuage_de_mots.png";
+
+            Game1.GenererNuageDeMots(Game1.CreerDictionnaire(Game1.joueurs[0].ListeDeMot, Game1.joueurs[0].OccurenceMot), largeur, hauteur, cheminFichier);
         }
     }
 }

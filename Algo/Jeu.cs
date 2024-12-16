@@ -1,6 +1,11 @@
 using Algo;
 using ClasseJoueur;
 using System;
+using System.Drawing;
+
+using System.IO;
+using System.Linq;
+
 
 namespace GameJeu
 {
@@ -9,6 +14,7 @@ namespace GameJeu
         public string langue;
         public int nbJoueurs;
         public int tailleGrid;
+        public Joueur[] joueurs;
 
         /// <summary>
         /// Constructeur de la classe Jeu.
@@ -60,7 +66,7 @@ namespace GameJeu
             this.nbJoueurs = Convert.ToInt32(Console.ReadLine());
 
             Console.WriteLine("IA (oui/non) ?");
-            Joueur[] joueurs = new Joueur[nbJoueurs];
+            this.joueurs = new Joueur[nbJoueurs];
             if (Console.ReadLine() == "oui")
             {
                 string pseudoTempo;
@@ -80,11 +86,11 @@ namespace GameJeu
                     joueurs[i] = new Joueur(pseudoTempo);
                 }
             }
-            int timer = 1;
+            int timer = 50;
 
             Console.WriteLine("La temps de jeu pour la partie est de 6 minutes");
             DateTime startTime2 = DateTime.Now;
-            TimeSpan duration2 = new TimeSpan(0, timer, 0);
+            TimeSpan duration2 = new TimeSpan(0, 0, timer);
 
             while (DateTime.Now - startTime2 < duration2)
             {
@@ -92,7 +98,6 @@ namespace GameJeu
                 {
                     Plateau plateau = new Plateau(this.tailleGrid, langue);
                     plateau.toString();
-
                     DateTime startTime = DateTime.Now;
                     TimeSpan duration = new TimeSpan(0, 0, 15);
 
@@ -166,6 +171,106 @@ namespace GameJeu
                 if (maxScore == joueurs[i].score)
                     Console.WriteLine(joueurs[i].name + " est le vainqueur avec un score de " + joueurs[i].score);
             }
+        }
+
+        public Dictionary<string, int> CreerDictionnaire(string[] ListeDeMot, int[] OccurenceMot)
+        {
+            // Vérifier que les deux tableaux ont la même longueur
+            if (ListeDeMot.Length != OccurenceMot.Length)
+            {
+                throw new ArgumentException("Les tableaux ListeDeMot et OccurenceMot doivent avoir la même longueur.");
+            }
+
+            // Initialiser le dictionnaire
+            Dictionary<string, int> dictionnaire = new Dictionary<string, int>();
+
+            // Associer chaque mot avec son occurrence
+            for (int i = 0; i < ListeDeMot.Length; i++)
+            {
+                if (ListeDeMot[i] == null || OccurenceMot[i]==0 || (ListeDeMot[i] == ""))
+                {
+                    continue;
+                }
+                else
+                {
+                    if (dictionnaire.ContainsKey(ListeDeMot[i]))
+                    {
+                        dictionnaire[ListeDeMot[i]] += OccurenceMot[i];
+                    }
+                    else
+                    {
+                        dictionnaire[ListeDeMot[i]] = OccurenceMot[i];
+                    }
+                    
+                }
+
+            }
+            return dictionnaire;
+        }
+
+
+        public void GenererNuageDeMots(Dictionary<string, int> mots, int largeur, int hauteur, string cheminFichier)
+        {
+            // Créer une nouvelle image
+            using Bitmap image = new Bitmap(largeur, hauteur);
+            using Graphics graphics = Graphics.FromImage(image);
+
+            // Fond blanc
+            graphics.Clear(Color.White);
+
+            // Déterminer les tailles de police basées sur les occurrences
+            int tailleMin = 10;
+            int tailleMax = 50;
+            int occurenceMax = mots.Values.Max();
+            int occurenceMin = mots.Values.Min();
+            if (occurenceMax < 2) occurenceMax = 2;
+            Console.WriteLine(occurenceMax);
+            Console.WriteLine(occurenceMin);
+
+            // Mapper chaque mot à une taille de police
+            var motsAvecTaille = mots.Select(mot => new
+            {
+                Mot = mot.Key,
+                Taille = Map(mot.Value, occurenceMin, occurenceMax, tailleMin, tailleMax)
+            }).OrderByDescending(m => m.Taille).ToList();
+
+            // Placer les mots aléatoirement sans chevauchement
+            Random random = new Random();
+            List<Rectangle> positions = new List<Rectangle>();
+
+            foreach (var mot in motsAvecTaille)
+            {
+                Font font = new Font("Arial", mot.Taille);
+                SizeF tailleTexte = graphics.MeasureString(mot.Mot, font);
+
+                Rectangle emplacement;
+                bool emplacementTrouve;
+
+                do
+                {
+                    // Position aléatoire
+                    int x = random.Next(0, largeur - (int)tailleTexte.Width);
+                    int y = random.Next(0, hauteur - (int)tailleTexte.Height);
+
+                    emplacement = new Rectangle(x, y, (int)tailleTexte.Width, (int)tailleTexte.Height);
+
+                    // Vérifier s'il y a chevauchement
+                    emplacementTrouve = !positions.Any(pos => pos.IntersectsWith(emplacement));
+                }
+                while (!emplacementTrouve);
+
+                // Ajouter le mot sur l'image
+                graphics.DrawString(mot.Mot, font, Brushes.Black, emplacement.Location);
+                positions.Add(emplacement);
+            }
+
+            // Sauvegarder l'image
+            image.Save(cheminFichier);
+        }
+
+        static int Map(int valeur, int minOrigine, int maxOrigine, int minCible, int maxCible)
+        {
+            return minCible + (valeur - minOrigine) * (maxCible - minCible) / (maxOrigine - minOrigine);
         }
     }
 }
