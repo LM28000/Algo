@@ -1,7 +1,7 @@
 using Algo;
 using ClasseJoueur;
 
-namespace TestPourProjetAlgo
+namespace GameJeu
 {
     internal class Jeu
     {
