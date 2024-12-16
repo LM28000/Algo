@@ -173,17 +173,16 @@ namespace Algo
         {
             Console.WriteLine($"Test du mot: {mot}");
 
-            if (!dictionnaire.Contains(mot))
+            
+            if (estpresentdansdico(mot))
+            {
+                Console.WriteLine($"Le mot {mot} est dans le dictionnaire.");
+            }
+            else
             {
                 Console.WriteLine($"Le mot {mot} n'est pas dans le dictionnaire.");
                 return false;
             }
-            else
-            {
-                Console.WriteLine($"Le mot {mot} est dans le dictionnaire.");
-            }
-            bool test = estpresentdansdico("TOUS");
-            Console.WriteLine(test);
             for (int i = 0; i < grille.GetLength(0); i++)
             {
                 for (int j = 0; j < grille.GetLength(1); j++)
