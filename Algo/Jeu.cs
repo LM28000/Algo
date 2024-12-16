@@ -66,7 +66,7 @@ namespace GameJeu
                         joueurs[i] = new Joueur(pseudoTempo);
                     }
                 }
-                int timer = 6;
+                int timer = 1;
 
 
                 #region TotalGameTimer
@@ -76,12 +76,6 @@ namespace GameJeu
 
                 while (DateTime.Now - startTime2 < duration2)
                 {
-                    Thread.Sleep(1000); // Pause de 1 seconde pour "compter" une seconde
-                                        //TimeSpan elapsed2 = DateTime.Now - startTime2;
-                                        //Console.WriteLine($"Elapsed time: {elapsed2.Seconds} seconds");
-
-
-
                     for (int i = 0; i < nbJoueurs; i++)
                     {
                         Plateau plateau = new Plateau(this.tailleGrid, langue);
@@ -92,11 +86,9 @@ namespace GameJeu
 
                         if (joueurs[i].ia == true)
                         {
+                        joueurs[i].indice = 0;
                             while ((DateTime.Now - startTime < duration) && joueurs[i].indice < plateau.dictionnaire.contenu.Count()) //boucle 1 minute pour chaque tour de joueur
                             {
-                                Console.WriteLine(joueurs[i].indice);
-                                Console.WriteLine("nouveau mot");
-
                                 if (plateau.dictionnaire.contenu[joueurs[i].indice] == null || plateau.dictionnaire.contenu[joueurs[i].indice] == "")
                                     {
                                         joueurs[i].indice++;
@@ -120,7 +112,6 @@ namespace GameJeu
                         {
                             while (DateTime.Now - startTime < duration) //boucle 1 minute pour chaque tour de joueur
                             {
-                                Thread.Sleep(1000); // Pause de 1 seconde pour "compter" une seconde
                                 Console.WriteLine("C'est au tour de " + joueurs[i].name + " de jouer. Vous avez 1 minute pour jouer.");
                                 Console.WriteLine("Entrez un mot : ");
                                 string? mot = Console.ReadLine();

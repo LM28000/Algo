@@ -69,7 +69,7 @@ namespace dico
         }
         public bool estpresentdansdico(string mot)
         {
-            contenu = TriDictionnairefusion(contenu);
+            
             return RechercheDichotomique(contenu, mot);
         }
 

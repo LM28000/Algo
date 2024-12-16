@@ -30,6 +30,7 @@ namespace Algo
                 dictionnaire.contenu = dictionnaire.LireDictionnaire("MotsPossiblesFR.txt");
             else
                 dictionnaire.contenu = dictionnaire.LireDictionnaire("MotsPossiblesEN.txt");
+            dictionnaire.contenu = dictionnaire.TriDictionnairefusion(dictionnaire.contenu);
             InitialiserGrille();
         }
         
