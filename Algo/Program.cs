@@ -21,12 +21,12 @@ namespace Test
             Console.WriteLine("Choose your language / Choix de langue : ");
             Console.WriteLine("- Francais");
             Console.WriteLine("- English");
-            langue = Convert.ToString(Console.ReadLine());
+            langue = Console.ReadLine();
 
-            while (langue != "Francais" && langue != "English")
+            while (string.IsNullOrEmpty(langue) || (langue != "Francais" && langue != "English"))
             {
                 Console.WriteLine("Please enter a correct language / Veuillez entrer une langue correct");
-                langue = Convert.ToString(Console.ReadLine());
+                langue = Console.ReadLine();
             }
 
             Jeu Game1 = new Jeu(langue);
@@ -34,11 +34,14 @@ namespace Test
             // Dimensions de l'image
             int largeur = 800;
             int hauteur = 600;
-
-            // Générer et sauvegarder le nuage de mots
-            string cheminFichier = "nuage_de_mots.png";
-
-            Game1.GenererNuageDeMots(Game1.CreerDictionnaire(Game1.joueurs[0].ListeDeMot, Game1.joueurs[0].OccurenceMot), largeur, hauteur, cheminFichier);
+            for (int i = 0; i < nbJoueur; i++)
+            {
+                // Générer et sauvegarder le nuage de mots
+                string cheminFichier = "nuage_de_mots" + i + ".png";
+                Console.WriteLine("Génération du nuage de mots pour le joueur " + i + "...");
+                Game1.GenererNuageDeMots(Game1.CreerDictionnaire(Game1.joueurs[i].ListeDeMot, Game1.joueurs[i].OccurenceMot), largeur, hauteur, cheminFichier);
+            }
+            Console.WriteLine("Nuages de mots générés avec succès !");
         }
     }
 }

@@ -55,23 +55,23 @@ namespace GameJeu
         public void LancerJeu(string langue)
         {
             Console.WriteLine("Choix de la taille de la grille, minimum 4 par 4 : ");
-            this.tailleGrid = Convert.ToInt32(Console.ReadLine());
-            while (tailleGrid < 4)
+            while (!int.TryParse(Console.ReadLine(), out this.tailleGrid) || this.tailleGrid < 4)
             {
                 Console.WriteLine("Entrez une taille de grille correcte, minimum 4x4 (ex : 5) : ");
-                this.tailleGrid = Convert.ToInt32(Console.ReadLine());
             }
 
             Console.WriteLine("Combien de joueurs : ");
-            this.nbJoueurs = Convert.ToInt32(Console.ReadLine());
+            while (!int.TryParse(Console.ReadLine(), out this.nbJoueurs) || this.nbJoueurs <= 0)
+            {
+                Console.WriteLine("Entrez un nombre de joueurs valide : ");
+            }
 
             Console.WriteLine("IA (oui/non) ?");
             this.joueurs = new Joueur[nbJoueurs];
-            if (Console.ReadLine() == "oui")
+            string iaResponse = Console.ReadLine()?.Trim().ToLower();
+            if (iaResponse == "oui")
             {
-                string pseudoTempo;
-                joueurs[0] = new Joueur("bot");
-                joueurs[0].ia = true;
+                joueurs[0] = new Joueur("bot") { ia = true };
                 Console.WriteLine("Pseudo");
                 joueurs[1] = new Joueur(Console.ReadLine());
                 joueurs[1].indice = 0;
@@ -79,21 +79,25 @@ namespace GameJeu
             else
             {
                 Console.WriteLine("Entrez les pseudos des joueurs : ");
-                string pseudoTempo;
                 for (int i = 0; i < nbJoueurs; i++)
                 {
-                    pseudoTempo = Console.ReadLine();
+                    string pseudoTempo;
+                    while (string.IsNullOrWhiteSpace(pseudoTempo = Console.ReadLine()))
+                    {
+                        Console.WriteLine("Entrez un pseudo valide : ");
+                    }
                     joueurs[i] = new Joueur(pseudoTempo);
                 }
             }
-            int timer = 50;
 
+            int timer = 20;
             Console.WriteLine("La temps de jeu pour la partie est de 6 minutes");
             DateTime startTime2 = DateTime.Now;
             TimeSpan duration2 = new TimeSpan(0, 0, timer);
 
             while (DateTime.Now - startTime2 < duration2)
             {
+                Console.Clear();
                 for (int i = 0; i < nbJoueurs; i++)
                 {
                     Plateau plateau = new Plateau(this.tailleGrid, langue);
@@ -131,7 +135,7 @@ namespace GameJeu
                             Console.WriteLine("Entrez un mot : ");
                             string? mot = Console.ReadLine();
 
-                            if (mot != null)
+                            if (!string.IsNullOrWhiteSpace(mot))
                             {
                                 bool estPresent = plateau.Test_Plateau(mot);
                                 Console.WriteLine($"Le mot '{mot}' est {(estPresent ? "présent" : "absent")} sur le plateau.");
@@ -172,6 +176,7 @@ namespace GameJeu
                     Console.WriteLine(joueurs[i].name + " est le vainqueur avec un score de " + joueurs[i].score);
             }
         }
+
 
         public Dictionary<string, int> CreerDictionnaire(string[] ListeDeMot, int[] OccurenceMot)
         {
@@ -221,6 +226,7 @@ namespace GameJeu
             // Déterminer les tailles de police basées sur les occurrences
             int tailleMin = 10;
             int tailleMax = 50;
+            if (mots.Count == 0) return;
             int occurenceMax = mots.Values.Max();
             int occurenceMin = mots.Values.Min();
             if (occurenceMax < 2) occurenceMax = 2;

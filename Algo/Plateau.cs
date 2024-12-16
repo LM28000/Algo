@@ -132,15 +132,12 @@ namespace Algo
         /// <returns><c>true</c> si le mot peut être formé; sinon, <c>false</c>.</returns>
         public bool Test_Plateau(string mot)
         {
-            Console.WriteLine($"Test du mot: {mot}");
 
             if (dictionnaire.estpresentdansdico(mot))
             {
-                Console.WriteLine($"Le mot {mot} est dans le dictionnaire.");
             }
             else
             {
-                Console.WriteLine($"Le mot {mot} n'est pas dans le dictionnaire.");
                 return false;
             }
 
@@ -150,7 +147,6 @@ namespace Algo
                 {
                     if (grille[i, j] == mot[0])
                     {
-                        Console.WriteLine($"Départ possible trouvé pour {mot[0]} à ({i}, {j})");
 
                         if (Test_PlateauRec(mot, 1, i, j, new bool[taille_grille, taille_grille]))
                         {
@@ -192,7 +188,6 @@ namespace Algo
                 if (nx >= 0 && ny >= 0 && nx < taille_grille && ny < taille_grille &&
                     !visite[nx, ny] && grille[nx, ny] == mot[index])
                 {
-                    Console.WriteLine($"Trouvé {mot[index]} à ({nx}, {ny})");
 
                     if (Test_PlateauRec(mot, index + 1, nx, ny, visite))
                     {
@@ -203,6 +198,23 @@ namespace Algo
 
             visite[x, y] = false;
             return false;
+        }
+
+        /// <summary>
+        /// Lit une entrée utilisateur et la valide.
+        /// </summary>
+        /// <param name="message">Le message à afficher pour l'entrée.</param>
+        /// <returns>La chaîne de caractères entrée par l'utilisateur.</returns>
+        public static string LireEntreeUtilisateur(string message)
+        {
+            string entree;
+            do
+            {
+                Console.WriteLine(message);
+                entree = Console.ReadLine();
+            } while (string.IsNullOrWhiteSpace(entree));
+
+            return entree;
         }
     }
 }
