@@ -15,6 +15,22 @@ namespace GameJeu
             //this.nbJoueur = 0;
             //this.tailleDeGrid = tailleGrid;
         }
+        public int Score_Add(string mot, Plateau plateau1)
+        {
+            //take score du mot -> add au score joueur
+            char[] tabChar = new char[mot.Length];
+            tabChar = mot.ToCharArray(); ;
+            int scoreTp = 0;
+            foreach (char c in tabChar)
+            {
+                for (int i = 0; i <= plateau1.lettres.Count; i++)
+                {
+                    if (plateau1.lettres[i].Caractere == c)
+                        scoreTp+= plateau1.lettres[c].Points;
+                }
+            }
+            return scoreTp;
+        }
 
         public void LancerJeu(string langue)
         {
@@ -25,7 +41,7 @@ namespace GameJeu
                 while (tailleGrid < 4)
                 {
                     Console.WriteLine("Entrez une taille de grille correcte, minimum 4x4 (ex : 5) : ");
-                    tailleGrid = Convert.ToInt32(Console.ReadLine());
+                    this.tailleGrid = Convert.ToInt32(Console.ReadLine());
                 }
 
                 Console.WriteLine("Combien de joueurs : ");
@@ -38,9 +54,9 @@ namespace GameJeu
                     pseudoTempo = Console.ReadLine();
                     joueurs[i] = new Joueur(pseudoTempo);
                 }
-                
+
                 int timer = 6;
-                
+
 
                 #region TotalGameTimer
                 Console.WriteLine("La temps de jeu pour la partie est de 6 minutes");
@@ -50,14 +66,14 @@ namespace GameJeu
                 while (DateTime.Now - startTime2 < duration2)
                 {
                     Thread.Sleep(1000); // Pause de 1 seconde pour "compter" une seconde
-                    //TimeSpan elapsed2 = DateTime.Now - startTime2;
-                    //Console.WriteLine($"Elapsed time: {elapsed2.Seconds} seconds");
+                                        //TimeSpan elapsed2 = DateTime.Now - startTime2;
+                                        //Console.WriteLine($"Elapsed time: {elapsed2.Seconds} seconds");
 
-                    
-                    
-                    for (int i = 0;i < nbJoueurs; i++)
+
+
+                    for (int i = 0; i < nbJoueurs; i++)
                     {
-                        Plateau plateau = new Plateau(4);
+                        Plateau plateau = new Plateau(this.tailleGrid);
                         plateau.toString();
                         #region TimerDe1Minute
                         //Console.WriteLine("Timer started for 1 minute");
@@ -70,8 +86,6 @@ namespace GameJeu
                             //Console.WriteLine($"Elapsed time: {elapsed.Seconds} seconds");
 
                             Console.WriteLine("C'est au tour de " + joueurs[i].name + " de jouer. Vous avez 1 minute pour jouer.");
-                            
-
                             Console.WriteLine("Entrez un mot : ");
                             string? mot = Console.ReadLine();
 
@@ -82,7 +96,7 @@ namespace GameJeu
                                 if (estPresent == true)
                                 {
                                     joueurs[i].Add_Mot(mot);
-                                    joueurs[i].Score_Add(mot);
+                                    joueurs[i].score += Score_Add(mot, plateau);
                                     Console.WriteLine("Le score de " + joueurs[i].name + " est de " + joueurs[i].score + " grâce aux mots cités suivants");
                                     joueurs[i].AfficherMotsJoueurs();
                                 }
@@ -98,10 +112,10 @@ namespace GameJeu
                 }
                 Console.WriteLine("Fin de la Partie");
                 //Compter le score for each player
-                
+
                 for (int i = 0; i < nbJoueurs; i++)
                 {
-                    Console.WriteLine("Le score de " +joueurs[i].name + " est de " + joueurs[i].score + ".");
+                    Console.WriteLine("Le score de " + joueurs[i].name + " est de " + joueurs[i].score + ".");
                 }
                 int[] scores = new int[nbJoueurs];
                 for (int i = 0; i < nbJoueurs; i++)
@@ -110,9 +124,9 @@ namespace GameJeu
                 }
                 int maxScore = scores.Max();
                 for (int i = 0; i < nbJoueurs; i++)
-                { 
-                    if(maxScore == joueurs[i].score)
-                        Console.WriteLine(joueurs[i].name + " est le vainqueur avec un score de "+ joueurs[i].score);
+                {
+                    if (maxScore == joueurs[i].score)
+                        Console.WriteLine(joueurs[i].name + " est le vainqueur avec un score de " + joueurs[i].score);
                 }
                 #endregion
             }
@@ -137,7 +151,7 @@ namespace GameJeu
                 }
 
                 int timer = 3;
-                
+
                 #region TotalGameTimer
                 Console.WriteLine("Game timer started for 6 minute");
                 DateTime startTime2 = DateTime.Now;
@@ -175,7 +189,7 @@ namespace GameJeu
                                 if (estPresent == true)
                                 {
                                     joueurs[i].Add_Mot(mot);
-                                    joueurs[i].Score_Add(mot);
+                                    joueurs[i].score += Score_Add(mot, plateau);
                                     Console.WriteLine(joueurs[i].name + "'s score is " + joueurs[i].score + ", they used these words : ");
                                     joueurs[i].AfficherMotsJoueurs();
                                 }
@@ -190,7 +204,7 @@ namespace GameJeu
 
                 }
                 Console.WriteLine("Game Over");
-                
+
                 //for each player
                 for (int i = 0; i < nbJoueurs; i++)
                 {
@@ -203,9 +217,9 @@ namespace GameJeu
                 }
                 int maxScore = scores.Max();
                 for (int i = 0; i < nbJoueurs; i++)
-                { 
-                    if(maxScore == joueurs[i].score)
-                        Console.WriteLine(joueurs[i].name + " is the winner with a score of "+ joueurs[i].score);
+                {
+                    if (maxScore == joueurs[i].score)
+                        Console.WriteLine(joueurs[i].name + " is the winner with a score of " + joueurs[i].score);
                 }
                 #endregion
                 #endregion
