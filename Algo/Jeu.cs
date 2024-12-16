@@ -57,6 +57,8 @@ namespace GameJeu
                     
                     for (int i = 0;i < nbJoueurs; i++)
                     {
+                        Plateau plateau = new Plateau(4);
+                        plateau.toString();
                         #region TimerDe1Minute
                         //Console.WriteLine("Timer started for 1 minute");
                         DateTime startTime = DateTime.Now;
@@ -68,8 +70,7 @@ namespace GameJeu
                             //Console.WriteLine($"Elapsed time: {elapsed.Seconds} seconds");
 
                             Console.WriteLine("C'est au tour de " + joueurs[i].name + " de jouer. Vous avez 1 minute pour jouer.");
-                            Plateau plateau = new Plateau(4);
-                            plateau.toString();
+                            
 
                             Console.WriteLine("Entrez un mot : ");
                             string? mot = Console.ReadLine();
